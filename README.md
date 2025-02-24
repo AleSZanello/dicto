@@ -14,7 +14,7 @@ Dicto is a Flutter package that provides fast, multi-lingual dictionary lookups 
 
    ```yaml
    dependencies:
-     dicto: ^1.0.0
+     dicto: ^0.0.1
 
 
 ## Usage
