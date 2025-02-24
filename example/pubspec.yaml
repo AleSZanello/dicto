@@ -1,0 +1,16 @@
+name: dicto_example
+description: An example app demonstrating how to use the Dicto package.
+publish_to: "none" 
+version: 1.0.0
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dicto:
+    path: ../ 
+
+flutter:
+  uses-material-design: true

@@ -5,8 +5,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 /// Attempts to load a dictionary asset for the given locale.
-/// First, it tries to load a compressed asset (words_<locale>.txt.gz).  
-/// If that fails, it falls back to the uncompressed asset (words_<locale>.txt).
+/// First, it tries to load a compressed asset (words_[locale].txt.gz).  
+/// If that fails, it falls back to the uncompressed asset (words_[locale].txt).
 Future<String> loadDictionaryAsset(String locale) async {
   final String gzAssetPath = 'assets/dictionaries/words_${locale}.txt.gz';
   try {
