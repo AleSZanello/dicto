@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3 (Add examples)
+
+- Added example folder on how to use it correctly & few fixes.
+
 ## 0.0.2 (Update dependencies)
 
 - Just a quick update on dependencies
