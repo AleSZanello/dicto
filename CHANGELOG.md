@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.2 (Update dependencies)
+
+- Just a quick update on dependencies
+
 ## 0.0.1 (Initial Release)
 
 - Introduced the Dicto package for high-performance, multi-lingual dictionary lookups.
