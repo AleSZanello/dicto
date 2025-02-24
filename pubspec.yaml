@@ -1,0 +1,22 @@
+name: dicto
+description: A high-performance, multi-lingual dictionary Flutter package with self-initializing SQLite DB.
+version: 0.0.1
+homepage: https://github.com/AleSZanello/dicto
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  path_provider: ^2.0.11
+  path: ^1.8.3
+  sqlite3: ^1.3.1
+  sqlite3_flutter_libs: ^0.5.31
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/dictionaries/
