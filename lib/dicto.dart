@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 /// Attempts to load a dictionary asset for the given locale.
-/// First, it tries to load a compressed asset (words_[locale].txt.gz).  
+/// First, it tries to load a compressed asset (words_[locale].txt.gz).
 /// If that fails, it falls back to the uncompressed asset (words_[locale].txt).
 Future<String> loadDictionaryAsset(String locale) async {
   final String gzAssetPath = 'assets/dictionaries/words_${locale}.txt.gz';
@@ -23,7 +23,8 @@ Future<String> loadDictionaryAsset(String locale) async {
 /// Initializes (or opens) the SQLite database.
 /// Only the provided [localesToInitialize] are processed.
 /// If the database already exists, it checks which locales are missing and adds them.
-Future<Database> initializeDatabase({required List<String> localesToInitialize}) async {
+Future<Database> initializeDatabase(
+    {required List<String> localesToInitialize}) async {
   // Obtain the application documents directory.
   final Directory documentsDir = await getApplicationDocumentsDirectory();
   final String dbPath = join(documentsDir.path, "dictionary.db");
@@ -42,7 +43,8 @@ Future<Database> initializeDatabase({required List<String> localesToInitialize})
         locale TEXT NOT NULL
       );
     ''');
-    db.execute('CREATE INDEX idx_locale_word ON dictionary(locale, word COLLATE NOCASE);');
+    db.execute(
+        'CREATE INDEX idx_locale_word ON dictionary(locale, word COLLATE NOCASE);');
 
     // Process each locale in the parameter.
     for (final locale in localesToInitialize) {
@@ -70,9 +72,12 @@ Future<Database> initializeDatabase({required List<String> localesToInitialize})
     print("Database generated at $dbPath");
   } else {
     // The database file exists; check for missing locales.
-    final ResultSet result = db.select('SELECT DISTINCT locale FROM dictionary;');
-    final existingLocales = result.map((row) => row['locale'] as String).toSet();
-    final missingLocales = localesToInitialize.where((l) => !existingLocales.contains(l));
+    final ResultSet result =
+        db.select('SELECT DISTINCT locale FROM dictionary;');
+    final existingLocales =
+        result.map((row) => row['locale'] as String).toSet();
+    final missingLocales =
+        localesToInitialize.where((l) => !existingLocales.contains(l));
 
     for (final locale in missingLocales) {
       print("Locale $locale missing in DB. Processing asset for this locale.");
@@ -105,7 +110,7 @@ class Dicto {
   static Database? _db;
 
   /// Initializes the Dicto package for the given locales.
-  /// [localesToInitialize] can be a single-locale string or a List<String>.
+  /// [localesToInitialize] can be a single-locale string or a List of Strings.
   static Future<void> initialize({required dynamic localesToInitialize}) async {
     List<String> locales;
     if (localesToInitialize is String) {
@@ -113,7 +118,8 @@ class Dicto {
     } else if (localesToInitialize is List<String>) {
       locales = localesToInitialize;
     } else {
-      throw ArgumentError("localesToInitialize must be either a String or a List<String>");
+      throw ArgumentError(
+          "localesToInitialize must be either a String or a List<String>");
     }
     _db = await initializeDatabase(localesToInitialize: locales);
     // Optionally, verify that at least one locale is present.
@@ -159,4 +165,3 @@ class DictoResponse {
     return result ?? "null";
   }
 }
-

@@ -8,7 +8,8 @@ void main() {
     test('Initialize with a single locale string', () async {
       // Initialize with a single locale ("en")
       await Dicto.initialize(localesToInitialize: 'en');
-      final response = Dicto.dictoGet('hello'); // assuming "hello" exists in the English asset
+      final response = Dicto.dictoGet(
+          'hello'); // assuming "hello" exists in the English asset
       expect(response.isValid, true);
       expect(response.locale, 'en');
     });
@@ -17,14 +18,15 @@ void main() {
       // Initialize with multiple locales
       await Dicto.initialize(localesToInitialize: ['en', 'es']);
       final responseEn = Dicto.dictoGet('hello'); // English word
-      final responseEs = Dicto.dictoGet('hola');  // Spanish word
+      final responseEs = Dicto.dictoGet('hola'); // Spanish word
       expect(responseEn.isValid, true);
       expect(responseEn.locale, 'en');
       expect(responseEs.isValid, true);
       expect(responseEs.locale, 'es');
     });
 
-    test('Initialization with invalid type should throw ArgumentError', () async {
+    test('Initialization with invalid type should throw ArgumentError',
+        () async {
       // Passing a non-string and non-list value should throw an error.
       expect(
         () async => await Dicto.initialize(localesToInitialize: 123),
@@ -32,7 +34,9 @@ void main() {
       );
     });
 
-    test('Re-initializing adds missing locales without reprocessing existing ones', () async {
+    test(
+        'Re-initializing adds missing locales without reprocessing existing ones',
+        () async {
       // First, initialize with only English.
       await Dicto.initialize(localesToInitialize: ['en']);
       final responseEn = Dicto.dictoGet('hello');

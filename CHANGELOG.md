@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.4 (Minor fixes)
+
+- Fixed format and small change on README.md
+
 ## 0.0.3 (Add examples)
 
 - Added example folder on how to use it correctly & few fixes.
