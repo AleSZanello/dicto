@@ -27,7 +27,6 @@ Future<Database> initializeDatabase({required List<String> localesToInitialize})
   // Obtain the application documents directory.
   final Directory documentsDir = await getApplicationDocumentsDirectory();
   final String dbPath = join(documentsDir.path, "dictionary.db");
-  final File dbFile = File(dbPath);
 
   // Open (or create) the database.
   final Database db = sqlite3.open(dbPath);
