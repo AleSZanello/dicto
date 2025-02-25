@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.13 (Fixes)
+
+- Fixed comma on some dictionaries files
+
 ## 0.0.12 (Performance)
 
 - Reduced unused languages and only added current support to 8 (en,es,pt,fr,it,de,ru,nl)
