@@ -8,7 +8,7 @@ import 'package:sqlite3/sqlite3.dart';
 /// First, it tries to load a compressed asset (words_[locale].txt.gz).
 /// If that fails, it falls back to the uncompressed asset (words_[locale].txt).
 Future<String> loadDictionaryAssetImpl(String locale) async {
-  final String gzAssetPath = 'assets/dictionaries/words_$locale.txt.gz';
+  final String gzAssetPath = 'packages/dicto/assets/dictionaries/words_$locale.txt.gz';
   try {
     final ByteData byteData = await rootBundle.load(gzAssetPath);
     final List<int> compressedBytes = byteData.buffer.asUint8List();

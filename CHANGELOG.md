@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.10 (Feature Added)
+
+- Minor fixes
+
 ## 0.0.9 (Feature Added)
 
 - Added Dicto.syncLocale(String locale) - Allow to sync the DB with just the desired locale (would delete any other locale on it)
