@@ -16,6 +16,20 @@ Dicto is a Flutter package that provides fast, multi-lingual dictionary lookups 
    dependencies:
      dicto: ^0.0.11
 
+## Current languages support
+
+```json
+lang_map = {
+        "english": "en",
+        "spanish": "es",
+        "portuguese": "pt",
+        "french": "fr",
+        "italian": "it",
+        "german": "de",
+        "russian": "ru",
+        "dutch": "nl",
+    }
+```
 
 ## Usage
 

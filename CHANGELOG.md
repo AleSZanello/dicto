@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.12 (Performance)
+
+- Reduced unused languages and only added current support to 8 (en,es,pt,fr,it,de,ru,nl)
+
 ## 0.0.11 (Feature Added)
 
 - Minor fixes
