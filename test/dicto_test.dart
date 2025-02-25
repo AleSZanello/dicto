@@ -8,9 +8,9 @@ void main() {
     test('Initialize with a single locale string', () async {
       // Initialize with a single locale ("en")
       await Dicto.initialize(localesToInitialize: 'en');
-      final response = Dicto.Get(
-          'hello'); // assuming "hello" exists in the English asset
-      expect(response,'en');
+      final response =
+          Dicto.Get('hello'); // assuming "hello" exists in the English asset
+      expect(response, 'en');
     });
 
     test('Initialize with a list of locales', () async {
