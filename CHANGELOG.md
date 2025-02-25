@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.11 (Feature Added)
+
+- Minor fixes
+
 ## 0.0.10 (Feature Added)
 
 - Minor fixes
