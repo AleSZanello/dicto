@@ -9,7 +9,7 @@ class Dicto {
   static bool get isInitialized => _db != null;
 
   /// Initializes Dicto for the given locales.
-  /// [localesToInitialize] can be a single locale string or a List<String>.
+  /// [localesToInitialize] can be a single locale string or a list of Strings.
   static Future<void> initialize({required dynamic localesToInitialize}) async {
     List<String> locales;
     if (localesToInitialize is String) {
