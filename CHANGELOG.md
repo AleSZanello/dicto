@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.7 (Fixes)
+
+- Fixed the asset path from the package
+
 ## 0.0.6 (Fixes)
 
 - Fixed an error where Dicto was trying to get a Table from a DB that didn't initialized yet
