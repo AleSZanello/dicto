@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.9 (Feature Added)
+
+- Added Dicto.syncLocale(String locale) - Allow to sync the DB with just the desired locale (would delete any other locale on it)
+- Added Dicto.isInitialized - Allow to check if the DB is initialized (just for some checkers if needed)
+
 ## 0.0.8 (Fixes)
 
 - Fixed .Get to .get (camelCase)

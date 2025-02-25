@@ -5,13 +5,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize Dicto with English and Spanish for this example.
   await Dicto.initialize(localesToInitialize: ['en', 'es']);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Dicto Example',
       home: DictoExampleScreen(),
     );
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class DictoExampleScreen extends StatefulWidget {
+  const DictoExampleScreen({super.key});
+
   @override
   _DictoExampleScreenState createState() => _DictoExampleScreenState();
 }
@@ -39,7 +43,7 @@ class _DictoExampleScreenState extends State<DictoExampleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dicto Example'),
+        title: const Text('Dicto Example'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -47,20 +51,20 @@ class _DictoExampleScreenState extends State<DictoExampleScreen> {
           children: [
             TextField(
               controller: _controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Enter a word',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _lookupWord,
-              child: Text('Lookup Word'),
+              child: const Text('Lookup Word'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Result: $_lookupResult',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ],
         ),

@@ -33,14 +33,30 @@ void main() async {
   runApp(MyApp());
 } 
 ```
-Word Lookup
+## Word Lookup
 
 Use Dicto.dictoGet to look up a word:
 
 ```dart
-final response = Dicto.Get("hello");
+final response = Dicto.get("hello");
 print(response); // prints "en" if "hello" exists, or prints an empty string if not.
 
+```
+
+## Sync DB to specific Locale
+
+Use syncLocale to delete all others locale on DB except the one provided as parameter:
+
+```dart
+await Dicto.syncLocale("en");
+```
+
+## Check if DB is Initialized
+
+Use it just as a checker that everything is ok and the DB is running as expected before any action.
+
+```dart
+await Dicto.isInitialized();
 ```
 
 ## Code Overview
