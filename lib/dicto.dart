@@ -23,8 +23,7 @@ Future<String> loadDictionaryAsset(String locale) async {
 /// Initializes (or opens) the SQLite database.
 /// Only the provided [localesToInitialize] are processed.
 /// If the database already exists, it checks which locales are missing and adds them.
-Future<Database> initializeDatabase(
-    {required List<String> localesToInitialize}) async {
+Future<Database> initializeDatabase({required List<String> localesToInitialize}) async {
   // Obtain the application documents directory.
   final Directory documentsDir = await getApplicationDocumentsDirectory();
   final String dbPath = join(documentsDir.path, "dictionary.db");
@@ -33,9 +32,13 @@ Future<Database> initializeDatabase(
   // Open (or create) the database.
   final Database db = sqlite3.open(dbPath);
 
-  if (!await dbFile.exists()) {
-    // The database does not exist; create and populate it.
-    print("Database file not found. Creating a new one at: $dbPath");
+  // Ensure that the dictionary table exists.
+  final tableCheck = db.select(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='dictionary';");
+
+  if (tableCheck.isEmpty) {
+    // If the table doesn't exist, create it.
+    print("Dictionary table missing. Creating new table.");
     db.execute('''
       CREATE TABLE dictionary (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,62 +46,35 @@ Future<Database> initializeDatabase(
         locale TEXT NOT NULL
       );
     ''');
-    db.execute(
-        'CREATE INDEX idx_locale_word ON dictionary(locale, word COLLATE NOCASE);');
+    db.execute('CREATE INDEX idx_locale_word ON dictionary(locale, word COLLATE NOCASE);');
+  }
 
-    // Process each locale in the parameter.
-    for (final locale in localesToInitialize) {
-      print("Processing locale: $locale from asset");
-      try {
-        final String content = await loadDictionaryAsset(locale);
-        final List<String> lines = content.split('\n');
+  // Check for missing locales in the existing table.
+  final ResultSet existingLocalesResult = db.select('SELECT DISTINCT locale FROM dictionary;');
+  final existingLocales = existingLocalesResult.map((row) => row['locale'] as String).toSet();
+  final missingLocales = localesToInitialize.where((l) => !existingLocales.contains(l));
 
-        db.execute('BEGIN TRANSACTION;');
-        for (final line in lines) {
-          final String word = line.trim();
-          if (word.isNotEmpty) {
-            // Insert the word in lowercase.
-            db.execute(
-              'INSERT INTO dictionary (word, locale) VALUES (?, ?);',
-              [word.toLowerCase(), locale],
-            );
-          }
+  // Process missing locales only.
+  for (final locale in missingLocales) {
+    print("Locale $locale missing in DB. Processing asset for this locale.");
+    try {
+      final String content = await loadDictionaryAsset(locale);
+      final List<String> lines = content.split('\n');
+
+      db.execute('BEGIN TRANSACTION;');
+      for (final line in lines) {
+        final String word = line.trim();
+        if (word.isNotEmpty) {
+          // Insert the word in lowercase.
+          db.execute(
+            'INSERT INTO dictionary (word, locale) VALUES (?, ?);',
+            [word.toLowerCase(), locale],
+          );
         }
-        db.execute('COMMIT;');
-      } catch (e) {
-        print("Error processing locale $locale: $e");
       }
-    }
-    print("Database generated at $dbPath");
-  } else {
-    // The database file exists; check for missing locales.
-    final ResultSet result =
-        db.select('SELECT DISTINCT locale FROM dictionary;');
-    final existingLocales =
-        result.map((row) => row['locale'] as String).toSet();
-    final missingLocales =
-        localesToInitialize.where((l) => !existingLocales.contains(l));
-
-    for (final locale in missingLocales) {
-      print("Locale $locale missing in DB. Processing asset for this locale.");
-      try {
-        final String content = await loadDictionaryAsset(locale);
-        final List<String> lines = content.split('\n');
-
-        db.execute('BEGIN TRANSACTION;');
-        for (final line in lines) {
-          final String word = line.trim();
-          if (word.isNotEmpty) {
-            db.execute(
-              'INSERT INTO dictionary (word, locale) VALUES (?, ?);',
-              [word.toLowerCase(), locale],
-            );
-          }
-        }
-        db.execute('COMMIT;');
-      } catch (e) {
-        print("Error processing locale $locale: $e");
-      }
+      db.execute('COMMIT;');
+    } catch (e) {
+      print("Error processing locale $locale: $e");
     }
   }
 
@@ -126,6 +102,7 @@ class Dicto {
   }
 
   /// Performs a lookup for [word] in the active database.
+  /// Returns the locale if the word is found, or an empty string if not.
   static String Get(String word) {
     if (_db == null) {
       throw Exception("Dicto not initialized. Call Dicto.initialize() first.");

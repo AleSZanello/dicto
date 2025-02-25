@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.6 (Fixes)
+
+- Fixed an error where Dicto was trying to get a Table from a DB that didn't initialized yet
+
 ## 0.0.5 (Changes)
 
 - changed Dicto.dictoGet() to Dicto.Get() and return empty string if not found the word on the DB
