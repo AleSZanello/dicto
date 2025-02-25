@@ -8,21 +8,18 @@ void main() {
     test('Initialize with a single locale string', () async {
       // Initialize with a single locale ("en")
       await Dicto.initialize(localesToInitialize: 'en');
-      final response = Dicto.dictoGet(
+      final response = Dicto.Get(
           'hello'); // assuming "hello" exists in the English asset
-      expect(response.isValid, true);
-      expect(response.locale, 'en');
+      expect(response,'en');
     });
 
     test('Initialize with a list of locales', () async {
       // Initialize with multiple locales
       await Dicto.initialize(localesToInitialize: ['en', 'es']);
-      final responseEn = Dicto.dictoGet('hello'); // English word
-      final responseEs = Dicto.dictoGet('hola'); // Spanish word
-      expect(responseEn.isValid, true);
-      expect(responseEn.locale, 'en');
-      expect(responseEs.isValid, true);
-      expect(responseEs.locale, 'es');
+      final responseEn = Dicto.Get('hello'); // English word
+      final responseEs = Dicto.Get('hola'); // Spanish word
+      expect(responseEn, 'en');
+      expect(responseEs, 'es');
     });
 
     test('Initialization with invalid type should throw ArgumentError',
@@ -39,22 +36,20 @@ void main() {
         () async {
       // First, initialize with only English.
       await Dicto.initialize(localesToInitialize: ['en']);
-      final responseEn = Dicto.dictoGet('hello');
-      expect(responseEn.isValid, true);
-      expect(responseEn.locale, 'en');
+      final responseEn = Dicto.Get('hello');
+      expect(responseEn, 'en');
 
       // Now, re-initialize with English and Spanish.
       // This should add Spanish without affecting existing English entries.
       await Dicto.initialize(localesToInitialize: ['en', 'es']);
-      final responseEs = Dicto.dictoGet('hola');
-      expect(responseEs.isValid, true);
-      expect(responseEs.locale, 'es');
+      final responseEs = Dicto.Get('hola');
+      expect(responseEs, 'es');
     });
 
     test('Lookup without initialization throws exception', () {
       // Reset the database for testing purposes.
       Dicto.resetForTesting();
-      expect(() => Dicto.dictoGet('hello'), throwsException);
+      expect(() => Dicto.Get('hello'), throwsException);
     });
   });
 
@@ -65,32 +60,28 @@ void main() {
     });
 
     test('Lookup word in English dictionary', () {
-      final response = Dicto.dictoGet('hello');
-      expect(response.isValid, true);
-      expect(response.locale, 'en');
+      final response = Dicto.Get('hello');
+      expect(response, 'en');
     });
 
     test('Lookup word in Spanish dictionary', () {
-      final response = Dicto.dictoGet('hola');
-      expect(response.isValid, true);
-      expect(response.locale, 'es');
+      final response = Dicto.Get('hola');
+      expect(response, 'es');
     });
 
     test('Lookup word in German dictionary', () {
-      final response = Dicto.dictoGet('hallo');
-      expect(response.isValid, true);
-      expect(response.locale, 'de');
+      final response = Dicto.Get('hallo');
+      expect(response, 'de');
     });
 
     test('Lookup is case-insensitive', () {
-      final response = Dicto.dictoGet('HeLLo');
-      expect(response.isValid, true);
-      expect(response.locale, 'en');
+      final response = Dicto.Get('HeLLo');
+      expect(response, 'en');
     });
 
     test('Lookup non-existent word returns invalid', () {
-      final response = Dicto.dictoGet('qwertyuiop');
-      expect(response.isValid, false);
+      final response = Dicto.Get('qwertyuiop');
+      expect(response, '');
     });
   });
 }

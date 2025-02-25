@@ -29,7 +29,7 @@ class _DictoExampleScreenState extends State<DictoExampleScreen> {
 
   void _lookupWord() {
     final word = _controller.text;
-    final DictoResponse response = Dicto.dictoGet(word);
+    final response = Dicto.Get(word);
     setState(() {
       _lookupResult = response.toString();
     });

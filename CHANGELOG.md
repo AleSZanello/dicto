@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5 (Changes)
+
+- changed Dicto.dictoGet() to Dicto.Get() and return empty string if not found the word on the DB
+
 ## 0.0.4 (Minor fixes)
 
 - Fixed format and small change on README.md

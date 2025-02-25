@@ -14,7 +14,7 @@ Dicto is a Flutter package that provides fast, multi-lingual dictionary lookups 
 
    ```yaml
    dependencies:
-     dicto: ^0.0.4
+     dicto: ^0.0.5
 
 
 ## Usage
@@ -38,8 +38,8 @@ Word Lookup
 Use Dicto.dictoGet to look up a word:
 
 ```dart
-final response = Dicto.dictoGet("hello");
-print(response); // e.g. prints "en" if the word exists, or "null" if not found.
+final response = Dicto.Get("hello");
+print(response); // prints "en" if "hello" exists, or prints an empty string if not.
 
 ```
 
@@ -60,4 +60,4 @@ Initializes the package using the database created by initializeDatabase.
 Performs a lookup for the provided word and returns a DictoResponse.
 
 5. **DictoResponse:**
-A simple response type of string containing the locale if is a valid word or null if the word was not found on any locale initialized on the DB
+A simple response type of string containing the locale if is a valid word or empty string if the word was not found on any locale initialized on the DB

@@ -126,7 +126,7 @@ class Dicto {
   }
 
   /// Performs a lookup for [word] in the active database.
-  static DictoResponse dictoGet(String word) {
+  static String Get(String word) {
     if (_db == null) {
       throw Exception("Dicto not initialized. Call Dicto.initialize() first.");
     }
@@ -137,9 +137,9 @@ class Dicto {
     );
     if (result.isNotEmpty) {
       final locale = result.first['locale'] as String;
-      return DictoResponse(isValid: true, locale: locale);
+      return locale;
     } else {
-      return DictoResponse(isValid: false);
+      return '';
     }
   }
 
@@ -150,18 +150,3 @@ class Dicto {
   }
 }
 
-/// Simple response class.
-class DictoResponse {
-  final bool isValid;
-  final String? locale;
-
-  DictoResponse({required this.isValid, this.locale});
-
-  /// Returns the locale if valid; otherwise, returns null.
-  String? get result => isValid ? locale : null;
-
-  @override
-  String toString() {
-    return result ?? "null";
-  }
-}
