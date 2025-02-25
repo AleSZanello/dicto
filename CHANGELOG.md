@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0 (Minor Upgrade)
+
+- Added new calls and optimized files
+
 ## 0.0.13 (Fixes)
 
 - Fixed comma on some dictionaries files

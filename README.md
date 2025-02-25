@@ -14,7 +14,7 @@ Dicto is a Flutter package that provides fast, multi-lingual dictionary lookups 
 
    ```yaml
    dependencies:
-     dicto: ^0.0.13
+     dicto: ^0.1.0
 
 ## Current languages support
 
@@ -47,7 +47,7 @@ void main() async {
   runApp(MyApp());
 } 
 ```
-## Word Lookup
+### Word Lookup
 
 Use Dicto.dictoGet to look up a word:
 
@@ -57,37 +57,72 @@ print(response); // prints "en" if "hello" exists, or prints an empty string if 
 
 ```
 
-## Sync DB to specific Locale
-
-Use syncLocale to delete all others locale on DB except the one provided as parameter:
+### Sync Database to a Specific Locale
+If you need to restrict your database to a single locale, use syncLocale to remove all other locales and reload the dictionary for the specified locale:
 
 ```dart
 await Dicto.syncLocale("en");
 ```
 
-## Check if DB is Initialized
-
-Use it just as a checker that everything is ok and the DB is running as expected before any action.
+### Check if the Database Is Initialized
+Before performing any operations, you can check whether the database has been initialized:
 
 ```dart
-await Dicto.isInitialized();
+if (Dicto.isInitialized) {
+  // The dictionary database is ready to use.
+}
 ```
+
+### Additional Helper Functions
+Dicto also provides several helper methods for common dictionary operations:
+
+Count Words:
+Get the total number of words for a specific locale.
+
+```dart
+int totalWords = Dicto.countWords("en");
+print("Total words in English: $totalWords");
+```
+
+### Search Words:
+Search for words containing a specific substring. You can optionally filter by locale.
+
+```dart
+List<String> matches = Dicto.searchWords("app", locale: "en");
+print("Search results: $matches");
+```
+
+### Get a Random Word:
+Retrieve a random word from the dictionary for the specified locale.
+
+```dart
+String randomWord = Dicto.getRandomWord("en");
+print("Random word: $randomWord");
+```
+
 
 ## Code Overview
 
 Below is a simplified summary of the main functions in Dicto:
 
 1. **loadDictionaryAsset(String locale):**
-Loads a compressed asset for the given locale (e.g. words_en.txt.gz) and decompresses it.
+Loads and decompresses the dictionary asset for the given locale (e.g. words_en.txt.gz).
 
 2. **initializeDatabase({required List<String> localesToInitialize}):**
-Creates or opens the SQLite database. It processes only the specified locales and adds missing locales if needed.
+Creates or opens the SQLite database and processes only the specified locales. If needed, it adds missing locales.
 
-3. **Dicto.initialize({required List<String> localesToInitialize}):**
-Initializes the package using the database created by initializeDatabase.
+3. **Dicto.initialize({required dynamic localesToInitialize}):**
+Initializes the package using the database from initializeDatabase. Accepts a single locale as a String or a list of locales, ensuring the database contains only the specified locales.
 
-4. **Dicto.dictoGet(String word):**
-Performs a lookup for the provided word and returns a DictoResponse.
+4. **Dicto.get(String word):**
+Performs a lookup for the provided word and returns the locale in which the word exists. If the word is not found, it returns an empty string.
 
-5. **DictoResponse:**
-A simple response type of string containing the locale if is a valid word or empty string if the word was not found on any locale initialized on the DB
+5. **Dicto.syncLocale(String locale):**
+Synchronizes the database so that only the specified locale exists by deleting all other locales and reloading the corresponding asset.
+
+6. **Additional Helper Methods:**
+Synchronizes the database so that only the specified locale exists by deleting all other locales and reloading the corresponding asset.
+
+- ***Dicto.countWords(String locale):*** Returns the total number of words for the specified locale.
+- ***Dicto.searchWords(String query, {String? locale}):*** Returns a list of words that match the search query, optionally filtering by locale.
+- ***Dicto.getRandomWord(String locale):*** Retrieves a random word from the dictionary for the specified locale.
