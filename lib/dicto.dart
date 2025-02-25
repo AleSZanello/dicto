@@ -104,7 +104,7 @@ class Dicto {
 
   /// Performs a lookup for [word] in the active database.
   /// Returns the locale if the word is found, or an empty string if not.
-  static String Get(String word) {
+  static String get(String word) {
     if (_db == null) {
       throw Exception("Dicto not initialized. Call Dicto.initialize() first.");
     }

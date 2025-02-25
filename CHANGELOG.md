@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.8 (Fixes)
+
+- Fixed .Get to .get (camelCase)
+
 ## 0.0.7 (Fixes)
 
 - Fixed the asset path from the package
